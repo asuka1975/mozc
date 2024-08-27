@@ -145,7 +145,7 @@ cc_library(
             "_UNICODE",
         ],
         oss_openbsd = [
-            "MOZC_BUILD,
+            "MOZC_BUILD",
         ],
         wasm = [
             "GOOGLE_JAPANESE_INPUT_BUILD",
