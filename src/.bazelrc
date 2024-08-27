@@ -18,12 +18,16 @@ common:oss_android  --config=android_env --config=android_env_workspace --define
 common:prod_android --config=android_env --config=android_env_workspace --define TARGET=prod_android
 common:oss_android_bzlmod --config=android_env --config=android_env_bzlmod --define TARGET=oss_android
 
+common:openbsd      --config=openbsd_env --define TARGET=oss_openbsd
+common:oss_openbsd      --config=openbsd_env --define TARGET=oss_openbsd
+
 ## Bzlmod options: Bzlmod is the default except for Android.
 common:linux_env   --config=bzlmod
 common:macos_env   --config=bzlmod
 common:windows_env --config=bzlmod
 common:android_env_bzlmod --config=bzlmod
 common:android_env_workspace --config=workspace
+common:openbsd_env --config=bzlmod
 
 common:bzlmod --enable_bzlmod
 common:workspace --noenable_bzlmod
@@ -36,6 +40,7 @@ common:linux_env   --config=compiler_gcc_like
 common:android_env --config=compiler_gcc_like
 common:macos_env   --config=compiler_gcc_like
 common:windows_env --config=compiler_msvc_like
+common:openbsd_env --config=compiler_gcc_like
 
 # Make sure we set -std=c++20 that may affect ABI across all the compilation targets.
 # https://github.com/abseil/abseil-cpp/blob/master/FAQ.md#what-is-abi-and-why-dont-you-recommend-using-a-pre-compiled-version-of-abseil
@@ -61,6 +66,10 @@ test:macos_env   --test_tag_filters=-nomac
 ## Windows specific options
 build:windows_env --build_tag_filters=-nowin
 test:windows_env   --test_tag_filters=-nowin
+
+## OpenBSD specific options
+build:openbsd_env --build_tag_filters=-noopenbsd --objccopt "-fsigned-char"
+test:openbsd_env   --test_tag_filters=-noopenbsd
 
 # A temporary workaround to make "mozc_win_build_rule" work.
 # Note that "incompatible_enable_cc_toolchain_resolution" is now enabled by

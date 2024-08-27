@@ -202,6 +202,12 @@ pkg_config_repository(
   packages = ["Qt6Core", "Qt6Gui", "Qt6Widgets"],
 )
 
+# Qt for OpenBSD
+pkg_config_repository(
+  name = "qt_openbsd",
+  packages = ["Qt6Core", "Qt6Gui", "Qt6Widgets"],
+)
+
 # Qt for macOS
 load("@//bazel:qt_mac_repository.bzl", "qt_mac_repository")
 qt_mac_repository(

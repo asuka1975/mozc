@@ -55,10 +55,11 @@ load("//bazel:stubs.bzl", "pytype_strict_binary", "pytype_strict_library", "regi
 
 # Tags aliases for build filtering.
 MOZC_TAGS = struct(
-    ANDROID_ONLY = ["nolinux", "nomac", "nowin"],
-    LINUX_ONLY = ["noandroid", "nomac", "nowin"],
-    MAC_ONLY = ["noandroid", "nolinux", "nowin"],
-    WIN_ONLY = ["noandroid", "nolinux", "nomac"],
+    ANDROID_ONLY = ["nolinux", "nomac", "nowin", "noopenbsd"],
+    LINUX_ONLY = ["noandroid", "nomac", "nowin", "noopenbsd"],
+    MAC_ONLY = ["noandroid", "nolinux", "nowin", "noopenbsd"],
+    WIN_ONLY = ["noandroid", "nolinux", "nomac", "noopenbsd"],
+    OPENBSD_ONLY = ["noandroid", "nolinux", "nomac", "nowin"],
 )
 
 def _copts_unsigned_char():
@@ -299,7 +300,7 @@ def mozc_objc_library(
             "@platforms//os:ios": [],
             "//conditions:default": ["@platforms//:incompatible"],
         }),
-        tags = tags + ["noandroid", "nolinux", "nowin"],
+        tags = tags + ["noandroid", "nolinux", "nowin", "noopenbsd"],
         **kwargs
     )
 
@@ -540,12 +541,14 @@ def mozc_select(
         oss_linux = None,
         oss_macos = None,
         oss_windows = None,
+        oss_openbsd = None,
         prod = None,
         prod_linux = None,
         prod_macos = None,
         prod_windows = None,
         wasm = None,
-        windows = None):
+        windows = None,
+        openbsd = None):
     """select wrapper for target os selection.
 
     The priority of value checking:
@@ -568,12 +571,14 @@ def mozc_select(
       oss_linux: value for OSS Linux build.
       oss_macos: value for OSS macOS build.
       oss_windows: value for OSS Windows build.
+      oss_openbsd: value for OSS OpenBSD build.
       prod: value for prod build.
       prod_linux: value for prod Linux build.
       prod_macos: value for prod macOS build.
       prod_windows: value for prod Windows build.
       wasm: value for wasm build.
       windows: value for Windows build. (placeholder)
+      openbsd: value for OpenBSD build.
 
     Returns:
       Generated select statement.
@@ -590,6 +595,7 @@ def mozc_select(
         "//bazel/cc_target_os:oss_linux": _get_value([oss_linux, oss, linux, client, default]),
         "//bazel/cc_target_os:oss_macos": _get_value([oss_macos, oss, macos, ios, client, default]),
         "//bazel/cc_target_os:oss_windows": _get_value([oss_windows, oss, windows, client, default]),
+        "//bazel/cc_target_os:oss_openbsd": _get_value([oss_openbsd, oss, openbsd, client, default]),
         "//bazel/cc_target_os:prod_linux": _get_value([prod_linux, prod, oss_linux, oss, linux, client, default]),
         "//bazel/cc_target_os:prod_macos": _get_value([prod_macos, prod, oss_macos, oss, macos, ios, client, default]),
         "//bazel/cc_target_os:prod_windows": _get_value([prod_windows, prod, oss_windows, oss, windows, client, default]),

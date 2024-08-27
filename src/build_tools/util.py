@@ -53,6 +53,9 @@ def IsLinux():
   """Returns true if the platform is Linux."""
   return os.name == 'posix' and os.uname()[0] == 'Linux'
 
+def IsOpenBSD():
+  """Returns true if the platform is OpenBSD."""
+  return os.name == 'posix' and os.uname()[0] == 'OpenBSD'
 
 def CaseAwareAbsPath(path: str) -> str:
   """Wraps os.path.abspath() with case normalization.

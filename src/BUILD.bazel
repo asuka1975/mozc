@@ -118,6 +118,9 @@ cc_library(
         macos = [
             "GOOGLE_JAPANESE_INPUT_BUILD",
         ],
+        openbsd = [
+            "GOOGLE_JAPANESE_INPUT_BUILD",
+        ],
         oss_android = [
         ],
         oss_linux = [
@@ -140,6 +143,9 @@ cc_library(
             "PSAPI_VERSION=2",
             "UNICODE",
             "_UNICODE",
+        ],
+        oss_openbsd = [
+            "MOZC_BUILD,
         ],
         wasm = [
             "GOOGLE_JAPANESE_INPUT_BUILD",

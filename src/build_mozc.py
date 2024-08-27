@@ -57,6 +57,7 @@ from build_tools.util import CopyFile
 from build_tools.util import IsLinux
 from build_tools.util import IsMac
 from build_tools.util import IsWindows
+from build_tools.util import IsOpenBSD
 from build_tools.util import PrintErrorAndExit
 from build_tools.util import RemoveDirectoryRecursively
 from build_tools.util import RemoveFile
@@ -100,6 +101,7 @@ def GetBuildShortBaseName(target_platform):
       'Windows': 'out_win',
       'Mac': 'out_mac',
       'Linux': 'out_linux',
+      'OpenBSD': 'out_openbsd'
   }
 
   if target_platform not in platform_dict:
@@ -189,6 +191,8 @@ def AddTargetPlatformOption(parser):
     default_target = 'Windows'
   elif IsMac():
     default_target = 'Mac'
+  elif IsOpenBSD():
+    default_target = 'OpenBSD'
   parser.add_option('--target_platform', dest='target_platform',
                     default=default_target,
                     help=('This option enables this script to know which build'
@@ -287,7 +291,7 @@ def ExpandMetaTarget(options, meta_target_name):
   if meta_target_name != 'package':
     return dependencies + [meta_target_name]
 
-  if target_platform == 'Linux':
+  if target_platform == 'Linux' or target_platform == 'OpenBSD':
     targets = [
         OSS_SRC_DIR + '/server/server.gyp:mozc_server',
         OSS_SRC_DIR + '/gui/gui.gyp:mozc_tool',
@@ -482,7 +486,7 @@ def GypMain(options, unused_args):
     gyp_options.extend(['-D', 'use_qt=NO'])
   else:
     gyp_options.extend(['-D', 'use_qt=YES'])
-    if target_platform == 'Linux':
+    if target_platform == 'Linux' or target_platform == 'OpenBSD':
       if PkgExists('Qt6Core', 'Qt6Gui', 'Qt6Widgets'):
         qt_ver = 6
       elif PkgExists('Qt5Core', 'Qt5Gui', 'Qt5Widgets'):

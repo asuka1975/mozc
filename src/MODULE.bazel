@@ -154,6 +154,12 @@ pkg_config_repository(
     packages = ["Qt6Core", "Qt6Gui", "Qt6Widgets"],
 )
 
+# Qt for OpenBSD
+pkg_config_repository(
+    name = "qt_openbsd",
+    packages = ["Qt6Core", "Qt6Gui", "Qt6Widgets"],
+)
+
 # Qt for macOS
 qt_mac_repository = use_repo_rule("@//bazel:qt_mac_repository.bzl", "qt_mac_repository")
 MACOS_QT_PATH = "/usr/local/Qt-6.5.2"
