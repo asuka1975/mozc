@@ -139,10 +139,10 @@ void PopulateTypeCorrectedQuery(
     const composer::TypeCorrectedQuery& typing_corrected_result,
     Result* absl_nonnull result) {
   if (typing_corrected_result.type & composer::TypeCorrectedQuery::CORRECTION) {
-    result->attributes |= TYPING_CORRECTION;
+    result->attributes |= Attribute::TYPING_CORRECTION;
   }
   if (typing_corrected_result.type & composer::TypeCorrectedQuery::COMPLETION) {
-    result->attributes |= TYPING_COMPLETION;
+    result->attributes |= Attribute::TYPING_COMPLETION;
   }
   result->typing_correction_score = typing_corrected_result.score;
   // bias = hyp_score - base_score, so larger is better.
@@ -155,33 +155,33 @@ void PopulateTypeCorrectedQuery(
 
 std::string GetPredictionTypeDebugString(PredictionTypes types) {
   std::string debug_desc;
-  if (types & PredictionType::UNIGRAM) {
+  if (types & Attribute::UNIGRAM) {
     debug_desc.append(1, 'U');
   }
-  if (types & PredictionType::BIGRAM) {
+  if (types & Attribute::BIGRAM) {
     debug_desc.append(1, 'B');
   }
-  if (types & PredictionType::REALTIME_TOP) {
+  if (types & Attribute::REALTIME_TOP) {
     debug_desc.append("R1");
-  } else if (types & PredictionType::REALTIME) {
+  } else if (types & Attribute::REALTIME_CONVERSION) {
     debug_desc.append(1, 'R');
   }
-  if (types & PredictionType::SUFFIX) {
+  if (types & Attribute::SUFFIX_DICTIONARY) {
     debug_desc.append(1, 'S');
   }
-  if (types & PredictionType::ENGLISH) {
+  if (types & Attribute::ENGLISH) {
     debug_desc.append(1, 'E');
   }
-  if (types & PredictionType::TYPING_CORRECTION) {
+  if (types & Attribute::TYPING_CORRECTION) {
     debug_desc.append(1, 'T');
   }
-  if (types & PredictionType::TYPING_COMPLETION) {
+  if (types & Attribute::TYPING_COMPLETION) {
     debug_desc.append(1, 'C');
   }
-  if (types & PredictionType::SUPPLEMENTAL_MODEL) {
+  if (types & Attribute::SUPPLEMENTAL_MODEL) {
     debug_desc.append(1, 'X');
   }
-  if (types & PredictionType::KEY_EXPANDED_IN_DICTIONARY) {
+  if (types & Attribute::KEY_EXPANDED_IN_DICTIONARY) {
     debug_desc.append(1, 'K');
   }
   return debug_desc;

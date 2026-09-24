@@ -112,15 +112,19 @@ enum [[deprecated(
 // to verify the exact expected prediction types while ignoring other behavioral
 // attributes to keep test assertions consistent and robust.
 constexpr uint32_t kPredictionTypesMaskForTesting =
-    PredictionType::UNIGRAM | PredictionType::BIGRAM |
-    PredictionType::REALTIME | PredictionType::SUFFIX |
-    PredictionType::ENGLISH | PredictionType::TYPING_CORRECTION |
-    PredictionType::PREFIX | PredictionType::NUMBER |
-    PredictionType::SINGLE_KANJI | PredictionType::TYPING_COMPLETION |
-    PredictionType::POST_CORRECTION | PredictionType::SUPPLEMENTAL_MODEL |
-    PredictionType::WEAK_USER_HISTORY_PREDICTION |
-    PredictionType::REALTIME_TOP | PredictionType::KEY_EXPANDED_IN_DICTIONARY |
-    PredictionType::DISABLE_RESCORING;
+    converter::Attribute::UNIGRAM | converter::Attribute::BIGRAM |
+    converter::Attribute::REALTIME_CONVERSION |
+    converter::Attribute::SUFFIX_DICTIONARY | converter::Attribute::ENGLISH |
+    converter::Attribute::TYPING_CORRECTION |
+    converter::Attribute::PARTIALLY_KEY_CONSUMED | converter::Attribute::NUMBER |
+    converter::Attribute::SINGLE_KANJI |
+    converter::Attribute::TYPING_COMPLETION |
+    converter::Attribute::POST_CORRECTION |
+    converter::Attribute::SUPPLEMENTAL_MODEL |
+    converter::Attribute::WEAK_USER_HISTORY_PREDICTION |
+    converter::Attribute::REALTIME_TOP |
+    converter::Attribute::KEY_EXPANDED_IN_DICTIONARY |
+    converter::Attribute::DISABLE_RESCORING;
 // Bitfield to store a set of PredictionType.
 using PredictionTypes = uint32_t;
 

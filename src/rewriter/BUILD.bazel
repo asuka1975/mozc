@@ -1533,6 +1533,7 @@ mozc_cc_library(
         ":focus_candidate_rewriter",
         ":fortune_rewriter",
         ":ivs_variants_rewriter",
+        ":jev_rewriter",
         ":language_aware_rewriter",
         ":merger_rewriter",
         ":number_rewriter",
@@ -1664,6 +1665,52 @@ mozc_cc_library(
         "@com_google_absl//absl/base:no_destructor",
         "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/strings",
+    ],
+)
+
+mozc_cc_library(
+    name = "jev_rewriter",
+    srcs = ["jev_rewriter.cc"],
+    hdrs = ["jev_rewriter.h"],
+    deps = [
+        ":rewriter_interface",
+        "//base:environ",
+        "//base:util",
+        "//converter:segments",
+        "//protocol:commands_cc_proto",
+        "//protocol:config_cc_proto",
+        "//request:conversion_request",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:span",
+        "@com_google_protobuf//:json_util",
+        "@com_google_protobuf//:struct_cc_proto",
+        "@curl",
+    ],
+)
+
+mozc_cc_test(
+    name = "jev_rewriter_test",
+    srcs = ["jev_rewriter_test.cc"],
+    deps = [
+        ":jev_rewriter",
+        "//converter:segments",
+        "//protocol:commands_cc_proto",
+        "//protocol:config_cc_proto",
+        "//request:conversion_request",
+        "//testing:gunit_main",
+        "@com_google_absl//absl/strings:string_view",
+        "@com_google_absl//absl/types:span",
+        "@com_google_protobuf//:json_util",
+        "@com_google_protobuf//:struct_cc_proto",
+    ],
+)
+
+mozc_cc_binary(
+    name = "jev_integration_probe",
+    srcs = ["jev_integration_probe.cc"],
+    deps = [
+        "//client:client",
+        "//protocol:commands_cc_proto",
     ],
 )
 

@@ -50,6 +50,7 @@
 #include "rewriter/environmental_filter_rewriter.h"
 #include "rewriter/focus_candidate_rewriter.h"
 #include "rewriter/ivs_variants_rewriter.h"
+#include "rewriter/jev_rewriter.h"
 #include "rewriter/language_aware_rewriter.h"
 #include "rewriter/number_rewriter.h"
 #include "rewriter/remove_redundant_candidate_rewriter.h"
@@ -192,6 +193,7 @@ Rewriter::Rewriter(const engine::Modules& modules) {
   AddRewriter(make_unique_from_tuples<CorrectionRewriter>(
       modules, data_manager.GetReadingCorrectionData()));
   AddRewriter(std::make_unique<T13nPromotionRewriter>());
+  AddRewriter(std::make_unique<JevRewriter>());
   AddRewriter(make_unique_from_tuples<EnvironmentalFilterRewriter>(
       data_manager.GetEmojiRewriterData()));
   AddRewriter(std::make_unique<RemoveRedundantCandidateRewriter>());
